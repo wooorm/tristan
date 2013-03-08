@@ -1,6 +1,6 @@
-meteor.js Chat example
+# (Usefull) Meteor Chat example.
 
-This is a very simple example of a chat application done with meteor.js.
-
-Cleaned up to only require necessary elements.
-
+- Anonymous.
+- HTML5 Notifications.
+- HTML5 audio.
+- Shake event (on mobile).

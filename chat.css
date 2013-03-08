@@ -192,8 +192,6 @@ button:active, button.active
 	margin-left: .5rem;
 }
 
-
-
 textarea, input
 {
 	border: .2rem solid hsl(210, 30%, 82%);
@@ -206,7 +204,6 @@ textarea, input
 	text-indent: 0.1rem;
 	box-shadow: none;
 }
-
 
 textarea:-moz-placeholder, input:-moz-placeholder
 {
@@ -225,7 +222,8 @@ textarea:focus, input:focus
 	outline: 0;
 }
 
-@media screen and (max-width: 33em){
+@media screen and (max-width: 33em)
+{
 	.nav
 	{
 		margin: 0;
@@ -239,8 +237,8 @@ textarea:focus, input:focus
 	}
 }
 
-
-@media screen and (min-width: 33em){
+@media screen and (min-width: 33em)
+{
 	.roomScreen, .roomList
 	{
 		padding-top: 4.4rem;
@@ -283,7 +281,6 @@ textarea:focus, input:focus
 		border-top-right-radius: 0.35rem;
 		border-bottom-right-radius: 0.35rem;
 	}
-
 
 	.list .item.radii:first-child
 	{

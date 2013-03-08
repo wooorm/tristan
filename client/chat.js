@@ -71,7 +71,7 @@ if ( Meteor.isClient )
 		Meteor.call( 'messages:delete', _id );
 	}
 
-	// sounds.new_message = new Sound( assets.NEW_MESSAGE, 0.8 );
+	sounds.new_message = new Sound( assets.NEW_MESSAGE, 0.8 );
 
 	// == Templates ============================================================
 
@@ -260,7 +260,7 @@ if ( Meteor.isClient )
 
 					if ( name !== message.author && message.timestamp > time )
 					{
-						// sounds.new_message.play();
+						sounds.new_message.play();
 
 						if ( !Session.get( 'notify' ) )
 							return

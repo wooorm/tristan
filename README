@@ -1,0 +1,6 @@
+meteor.js Chat example
+
+This is a very simple example of a chat application done with meteor.js.
+
+Cleaned up to only require necessary elements.
+

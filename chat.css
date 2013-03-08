@@ -1,0 +1,308 @@
+*
+{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body, input, button, select
+{
+	font: 1rem Lato, sans-serif;
+}
+
+body
+{
+	color: hsl(210, 29%, 32%);
+	margin: 0;
+}
+
+button
+{
+	cursor: pointer;
+	border: none;
+	background: hsl(168, 76%, 52%);
+	box-shadow: inset 0 -.2rem 0 hsl(168, 76%, 42%);
+	color: hsl(210, 29%, 32%);
+	text-decoration: none;
+	text-shadow: none;
+	-webkit-transition: 0.25s;
+	transition: 0.25s;
+	-webkit-backface-visibility: hidden;
+	padding: .25rem .5rem;
+	margin: 0;
+}
+
+button:hover, button:focus
+{
+	background-color: hsl(168, 76%, 62%);
+	-webkit-transition: 0.25s;
+	transition: 0.25s;
+	-webkit-backface-visibility: hidden;
+}
+
+button:active, button.active
+{
+	background-color: hsl(168, 76%, 42%);
+	box-shadow: inset 0 .2rem 0 hsl(168, 76%, 32%);
+}
+
+.btn-toolbar button
+{
+	padding: 0.6rem 0.8rem 0.6rem;
+	border-right: 0.1rem solid hsl(168, 76%, 27%);
+}
+
+.btn-toolbar button:last-child
+{
+	border-right: none;
+}
+
+#root
+{
+	margin: 0 auto;
+	max-width: 28rem;
+}
+
+.nav
+{
+	padding: 1rem;
+	position: fixed;
+	max-width: 30rem;
+	background: hsl(210, 29%, 42%);
+	box-shadow: inset 0 -.2rem 0 hsl(210, 29%, 32%);
+	border: solid hsl(210, 29%, 22%);
+	border-width: 0 .15rem .15rem .15rem;
+	left: 0;
+	right: 0;
+	top: 0;
+	margin: 0 auto;
+	z-index: 1;
+}
+
+.nav .btn-toolbar
+{
+	text-align: center;
+}
+
+.nav .btn-toolbar button
+{
+	font-size: 1rem;
+}
+
+.list ul
+{
+	background-color: hsl(210, 29%, 42%);
+	border: .15rem solid hsl(210, 29%, 22%);
+	margin: 0;
+	list-style-type: none;
+	padding: 0;
+}
+
+.list .item
+{
+	color: white;
+	opacity: 1;
+	margin: 0;
+	border-top: .15rem solid hsl(210, 29%, 22%);
+	padding: 1rem;
+	position: relative;
+	-webkit-transition: 0.25s;
+	transition: 0.25s;
+	-webkit-backface-visibility: hidden;
+	background: hsl(210, 29%, 42%);
+	box-shadow: inset 0 -.2rem 0 hsl(210, 29%, 32%);
+}
+
+.list .item.loading
+{
+	opacity: 0;
+}
+
+.list .item:first-child
+{
+	border-top: none;
+}
+
+.item .btn-toolbar
+{
+	position: absolute;
+	right: .5rem;
+	top: .4rem;
+	opacity: 0;
+	-webkit-transition: 0.25s;
+	transition: 0.25s;
+}
+
+.item:hover .btn-toolbar
+{
+	opacity: 1;
+}
+
+.enter
+{
+	cursor: pointer;
+}
+
+#message, #username
+{
+	width: 100%;
+	margin: 0;
+}
+
+.author
+{
+	position: absolute;
+	color: hsl(210, 29%, 32%);
+}
+
+#create .author
+{
+	top: .65rem;
+}
+
+.authored
+{
+	position: relative;
+}
+
+.list .authored-by-other
+{
+	color: hsl(210, 29%, 32%);
+	background: hsl(168, 76%, 52%);
+	box-shadow: inset 0 -.2rem 0 hsl(168, 76%, 42%);
+}
+
+.authored-by-other .author
+{
+	right: 100%;
+	margin-right: .5rem;
+	text-align: right;
+	color: hsl(168, 76%, 52%);
+}
+
+.authored-by-me + .authored-by-me .author
+{
+	display: none;
+}
+
+.authored-by-me .author
+{
+	left: 100%;
+	margin-left: .5rem;
+}
+
+
+
+textarea, input
+{
+	border: .2rem solid hsl(210, 30%, 82%);
+	-webkit-transition: 0.25s;
+	transition: 0.25s;
+	color: hsl(210, 29%, 32%);
+	font-family: Lato, sans-serif;
+	font-size: 0.9rem;
+	padding: 0.6rem 0 0.6rem 0.6rem;
+	text-indent: 0.1rem;
+	box-shadow: none;
+}
+
+
+textarea:-moz-placeholder, input:-moz-placeholder
+{
+	color: hsl(210, 30%, 72%);
+}
+
+textarea::-webkit-input-placeholder, input::-webkit-input-placeholder
+{
+	color: hsl(210, 30%, 72%);
+}
+
+textarea:focus, input:focus
+{
+	border-color: hsl(168, 76%, 52%);
+	box-shadow: none;
+	outline: 0;
+}
+
+@media screen and (max-width: 33em){
+	.nav
+	{
+		margin: 0;
+		max-width: 100%;
+		position: relative;
+	}
+	
+	.roomScreen, .roomList
+	{
+		overflow: hidden;
+	}
+}
+
+
+@media screen and (min-width: 33em){
+	.roomScreen, .roomList
+	{
+		padding-top: 4.4rem;
+	}
+
+	
+	button.radii
+	{
+		border-radius: .25rem;
+	}
+
+	.btn-toolbar .radii
+	{
+		border-radius: 0;
+	}
+
+	.nav.radii
+	{
+		border-radius: 0 0 .5rem .5rem;
+	}
+
+	.list ul.radii
+	{
+		border-radius: 0.6rem;
+	}
+
+	textarea.radii, input.radii
+	{
+		border-radius: 0.5rem;
+	}
+
+	.btn-toolbar .radii:first-child
+	{
+		border-top-left-radius: 0.35rem;
+		border-bottom-left-radius: 0.35rem;
+	}
+
+	.btn-toolbar .radii:last-child
+	{
+		border-top-right-radius: 0.35rem;
+		border-bottom-right-radius: 0.35rem;
+	}
+
+
+	.list .item.radii:first-child
+	{
+		border-top-right-radius: 0.5rem;
+		border-top-left-radius: 0.5rem;
+	}
+	.list .item.radii:last-child
+	{
+		border-bottom-right-radius: 0.5rem;
+		border-bottom-left-radius: 0.5rem;
+	}
+	
+	.roomScreen, .roomList
+	{
+		padding-top: 6rem;
+	}
+	
+	.list ul
+	{
+		margin-top: 2rem;
+		margin-bottom: 2rem;
+	}
+}

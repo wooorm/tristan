@@ -1,0 +1,61 @@
+<head>
+	<title>Chat example</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+	<div id="root">
+		{{> main}}
+	</div>
+</body>
+
+<template name="main">
+	{{#if room}}
+		{{> room}}
+	{{else}}
+		{{> rooms}}
+	{{/if}}
+</template>
+
+<template name="rooms">
+	<div class="roomList list">
+		<div class="nav radii">
+			<div class="btn-toolbar"><button class="radii" id="addRoom">Add new room</button></div>
+		</div>
+		<ul class="radii">
+			{{#each rooms}}
+				<li class="roomItem item radii enter">
+					{{name}} <div class="btn-toolbar"><button class="radii delete">Delete</button></div>
+				</li>
+			{{/each}}
+		</ul>
+	</div>
+</template>
+
+<template name="room">
+	<div class="roomScreen list">
+		<div class="nav radii">
+			<div class="btn-toolbar"><button class="radii{{#if hasNotificationsEnabled}} active{{/if}}" id="notify">Notifications</button><button class="radii" id="leave">Leave</button>{{#if isLoggedIn}}<button class="radii" id="signout">Sign Out</button>{{/if}}</div>
+		</div>
+		{{#if isLoggedIn}}
+			<form id="create" class="authored authored-by-me">
+				<span class="author">{{user}}</span><input id="message" type="text" class="radii" placeholder="Lorem ipsum dolor sit amet..." />
+			</form>
+			<ul class="radii" id="messages">
+				{{#each messages}}
+					<li title="{{timestamp}}" class="item radii authored {{#if isAuthor}}authored-by-me{{else}}authored-by-other{{/if}}">
+						<span class="author">{{author}}</span>
+						{{text}}
+						{{#if isAuthor}}
+							<div class="btn-toolbar"><button class="radii delete">Delete</button></div>
+						{{/if}}
+					</li>
+				{{/each}}
+			</ul>
+		{{else}}
+			<form id="signup">
+				<input id="username" type="text" class="radii" placeholder="Anonymous" />
+			</form>
+		{{/if}}
+	</div>
+</template>

@@ -11,6 +11,20 @@ var Rooms = new Meteor.Collection( 'rooms' )
 
 if ( Meteor.isClient )
 {
+	window.onload = function()
+	{
+		window.addEventListener( 'shake', shakeEventDidOccur, false );
+
+		function shakeEventDidOccur()
+		{
+			if ( Session.get( 'name' ) == null && Session.get( 'room' ) == null )
+				return;
+
+			if ( confirm( 'Undo?' ) )
+				Meteor.call( 'messages:deleteByAuthor', Session.get( 'name' ), Session.get( 'room' ) )
+		}
+	};
+
 	// == Set-up ===============================================================
 	Meteor.call( 'server:time', function( error, serverTime )
 		{
@@ -71,7 +85,8 @@ if ( Meteor.isClient )
 		Meteor.call( 'messages:delete', _id );
 	}
 
-	sounds.new_message = new Sound( assets.NEW_MESSAGE, 0.8 );
+	if ( 'Sound' in window )
+		sounds.new_message = new Sound( assets.NEW_MESSAGE, 0.8 );
 
 	// == Templates ============================================================
 
@@ -260,7 +275,8 @@ if ( Meteor.isClient )
 
 					if ( name !== message.author && message.timestamp > time )
 					{
-						sounds.new_message.play();
+						if ( sounds.new_message )
+							sounds.new_message.play();
 
 						if ( !Session.get( 'notify' ) )
 							return
@@ -338,21 +354,6 @@ if ( Meteor.isClient )
 
 			// Store permission state in `notify`.
 			Session.set( 'notify', webkitNotifications.checkPermission() === 0 );
-
-			window.addEventListener( 'shake', function onshake()
-				{
-					alert( 'shake' );
-				}
-			, false );
-			// 
-			// //define a custom method to fire when shake occurs.
-			// function shakeEventDidOccur () {
-			// 
-			// 	//put your own code here etc.
-			// 	if (confirm("Undo?")) {
-			// 
-			// 	}
-			// }
 		}
 	);
 }

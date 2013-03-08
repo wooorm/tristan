@@ -44,6 +44,10 @@ if ( Meteor.isServer )
 		{
 			Messages.remove( { '_id' : _id } );
 		}
+		, 'messages:deleteByAuthor' : function _delete( author, room )
+		{
+			Messages.remove( { 'author' : author, 'room' : room } );
+		}
 	} );
 
 	// -- Utilities ------------------------------------------------------------

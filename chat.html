@@ -20,12 +20,15 @@
 <template name="rooms">
 	<div class="roomList list">
 		<div class="nav radii">
-			<div class="btn-toolbar"><button class="radii" id="addRoom">Add new room</button></div>
+			<div class="btn-toolbar">{{#if isLoggedIn}}<button class="radii" id="addRoom">Add new room</button>{{/if}}</div>
 		</div>
 		<ul class="radii">
 			{{#each rooms}}
 				<li class="roomItem item radii enter">
-					{{name}} <div class="btn-toolbar"><button class="radii delete">Delete</button></div>
+					{{name}}
+					{{#if isAuthor}}
+						<div class="btn-toolbar"><button class="radii delete">Delete</button></div>
+					{{/if}}
 				</li>
 			{{/each}}
 		</ul>

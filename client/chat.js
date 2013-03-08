@@ -4,6 +4,9 @@
 var Rooms = new Meteor.Collection( 'rooms' )
   , Messages = new Meteor.Collection( 'messages' )
   , time = null
+  , exports = this
+  , assets = exports.assets
+  , sounds = exports.sounds = {}
   ;
 
 if ( Meteor.isClient )
@@ -68,82 +71,7 @@ if ( Meteor.isClient )
 		Meteor.call( 'messages:delete', _id );
 	}
 
-
-	// == Sound ================================================================
-
-	// -- Constructor ----------------------------------------------------------
-	function Sound( source, level )
-	{
-		if ( !window.audioContext)
-			audioContext = new webkitAudioContext();
-
-		var _this = this;
-
-		_this.source = source;
-		_this.buffer = null;
-		_this.isLoaded = false;
-		_this.panner = audioContext.createPanner();
-		_this.volume = audioContext.createGainNode();
-
-		_this.volume.gain.value = level? level : 1;
-
-		var getSound = Base64Binary.decodeArrayBuffer( _this.source );
-
-		audioContext.decodeAudioData( getSound, function( buffer )
-			{
-				_this.buffer = buffer;
-				_this.isLoaded = true;
-			}
-		);
-	}
-
-	// -- Prototype ------------------------------------------------------------
-	//  * Play
-	Sound.prototype.play = function play()
-	{
-		// If the sound is loaded...
-		if ( this.isLoaded )
-		{
-			var playSound = audioContext.createBufferSource();
-
-			playSound.buffer = this.buffer;
-			playSound.connect( this.panner );
-
-			this.panner.connect( this.volume );
-
-			this.volume.connect( audioContext.destination );
-
-			playSound.noteOn( 0 );
-		}
-
-		// Return the context so we can work with it later!
-		return playSound;
-	}
-
-	Sound.prototype.setVolume = function setVolume( level )
-	{
-		this.volume.gain.value = level;
-	}
-
-	Sound.prototype.setPan = function setPan( x, y, z )
-	{
-		this.panner.setPosition( x, y, z );
-	}
-
-	// Pass the returned playSound context (from Sound.prototype.play) in order
-	// to stop sound playback.
-	Sound.prototype.killSound = function killSound( context )
-	{
-		context.noteOff( 0 );
-	}
-
-	// How-to's:
-	// tag    = new Sound( Blog_Tag );
-	// click  = new Sound( itfc_click, 0.8 );
-	// buy    = new Sound( itfc_buy_item );
-	// cancel = new Sound( itfc_item_cancel );
-
-
+	// sounds.new_message = new Sound( assets.NEW_MESSAGE, 0.8 );
 
 	// == Templates ============================================================
 
@@ -235,7 +163,7 @@ if ( Meteor.isClient )
 	// -- Helpers --------------------------------------------------------------
 	//  * GLOBAL
 	// Return if the user is logged in.
-	Handlebars.registerHelper('isLoggedIn', function isLoggedIn()
+	Handlebars.registerHelper( 'isLoggedIn', function isLoggedIn()
 		{
 			return Session.get( 'name' ) != null;
 		}
@@ -252,9 +180,14 @@ if ( Meteor.isClient )
 	// Return the current room or false.
 	Template.rooms.rooms = function availableRooms()
 	{
-		return _rooms.read;
+		return _rooms.read();
 	};
-	
+
+	Template.rooms.isAuthor = function isAuthor()
+	{
+		return Session.get( 'name' ) != null && Session.equals( 'name', this.author )
+	};
+
 	//  * Room
 	// Return messages in the current room, sorted by newest to oldest.
 	Template.room.messages = function messages()
@@ -267,9 +200,6 @@ if ( Meteor.isClient )
 	{
 		return Session.get( 'name' );
 	};
-	
-	
-	// Template.room.isLoggedIn = 
 	
 	// Return if the user is logged in.
 	Template.room.hasNotificationsEnabled = function hasNotificationsEnabled()
@@ -324,20 +254,23 @@ if ( Meteor.isClient )
 				'added' : function added( message )
 				{
 					var name = Session.get( 'name' );
-			
-					if ( !time || !name || !Session.get( 'notify' ) )
-						return
-			
+
+					if ( !time || !name )
+						return;
+
 					if ( name !== message.author && message.timestamp > time )
 					{
-						console.log( 'added', message )
-			
+						// sounds.new_message.play();
+
+						if ( !Session.get( 'notify' ) )
+							return
+
 						options = {
 							  'title' : 'message'
 							, 'body' : message.text
 							, 'icon' : ''
 						};
-			
+
 						g = webkitNotifications.createNotification( './favicon.ico', options.title, options.body );
 						g.show();
 					}
@@ -405,6 +338,21 @@ if ( Meteor.isClient )
 
 			// Store permission state in `notify`.
 			Session.set( 'notify', webkitNotifications.checkPermission() === 0 );
+
+			window.addEventListener( 'shake', function onshake()
+				{
+					alert( 'shake' );
+				}
+			, false );
+			// 
+			// //define a custom method to fire when shake occurs.
+			// function shakeEventDidOccur () {
+			// 
+			// 	//put your own code here etc.
+			// 	if (confirm("Undo?")) {
+			// 
+			// 	}
+			// }
 		}
 	);
 }

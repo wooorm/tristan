@@ -81,6 +81,7 @@ button:active, button.active
 
 .nav .btn-toolbar
 {
+	height: 2.25rem;
 	text-align: center;
 }
 
